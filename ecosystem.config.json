@@ -1,0 +1,20 @@
+{
+  "apps": [
+    {
+      "name": "snbp-mirror",
+      "cwd": "/home/aio/snbp-mirror",
+      "script": "npm",
+      "args": "start",
+      "instances": 1,
+      "exec_mode": "fork",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3001",
+        "APP_URL": "https://snbp.sman81.sch.id",
+        "project_id": "snbp-e462b",
+        "client_email": "firebase-adminsdk-fbsvc@snbp-e462b.iam.gserviceaccount.com",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDOf2Q0VT1Jmwlk\nK2LWaJINaiQSuXGj+y49XWpCc2gN5yQn4CwqkTsVjGnh2JDm149QylK39F0dzURt\n3hnKn1fmFQtrgpVs7EqAewpGEjOOG6jVp5L5QgWsOPzoYGdCXBfs9xtgg9hAyKu0\nEEF2JWA6tFL9LQrLeoUEOtf5Lb9XDbDxpsdyTcGnTPMN93kQCtQjXh3B3kNQf6PV\nGqvDS6zAXGS1q3LmQvSoNJmzOxdey/hlg7moAbjKzUQgMv45ci5U0CxHdvbbQpkN\nZW+Ek0kyRZ8BWNfgcQQQH+pbLZYdzEEAT9sdGTttbQlWdKv7KlV++iqSnHssEehm\nquYB3jOfAgMBAAECggEAGHHAHOnSPXpa3D6+jn8GewwLhSPqrey4Bo+eWotqz+qC\nvy2sTMWwZtaeWhvW21y9HGU28Yu90h9QcGkQSIogT55CIdHtel1mXFs0ViMlczcW\n/2O85EDKhx6f4ao3zwUz19tQpFY3LUQT/1bFSQUXpRtfj5TbaEbypBOLKXYe5mEE\nCs7vS9gZRHZhW5cbxKu+aj8rTSNVxKEMl9LFx1SGmmN8U0y5+ls01X8ONFLq/BFY\n5RTB18hutu8j55uXyhxpiaDuqzw/1BNiUDkrEBydmhzApPfkW1AFT1GtFJsMfI8B\n4YkNrB38RWJx49kdubFbkulULOsnUUhLYLC8QfVmkQKBgQDwGTFHtWjyg4J1l/3Q\nOKs7mbGi8uPWKJ/JFh7jbyXtyAH9WjihvZvIYxIJH9ORAKhZLzmtTxoS8ytDt51D\n1cNuFHNRe7bdSOAN10H82gXQjqBefJwAuOClCEBSmt9CCSIjzyGHkFeGqgNpcHFT\nvACiCwicPFap2d5UAsibg1xuOwKBgQDcLIGSpzNwrjJwuXliO4GMVCoV9LUIxsRL\nLNKMRMKfITO0z6IpB79rmnjU9/Ij3lvzea7cN9TjcBbagH39QOVXcqLu2m/x9pfs\nCogulOqaAmeWIAJsREKKemkdtu4iunbSARrRTOIp3Jl+9OUh566Tb47bBELn8YeS\nPuwX2h8F7QKBgQCE+d7yUUXrsuxpRqHbVdd4bfoVPqLzNJKyo16+JgwCsthvQi3F\nXqdOB5iwlwDs+UlEA8TU+M9/GVCn86TVMipH6GmqAnPYAQmegM7aRMIdrTCixC7+\ns2Yv4O8HESF/iGFxJcHzO/1N5xF2r0EE2EYdeTDunvh8n97j9pq2jr19iwKBgQDR\nhwlIJxYtBZm67Mc3VKnUgcQLYPVnhMEJSX6VPlp4VYB/cZlAsr7YCAk1o0AsIlAf\nRI3DxN40E1esWNuNR1T6A35LEFW4TpQFbYBr1AvuxJsPoyarIcqxPg0K2iuFoS2y\nbJq41BHnBKiOyT/FJFZeuKuaglOpp5D8/CRyDoG3gQKBgG6QBb1ujETPNoKGdbqd\nrSk5KLaBo5f/vCSaTzGzZCvsdXMOx4BJvliFYYR0nyl8aEmyQ7Ns95tGgrzuiGKb\nRdWrDDqr2rnBvufe94Vw3lzKo9EYq7SUm7CHdf7k/TTTJtKC7yuxCmKJbP/lGk9D\nwAcA74nVa2aehV1DxrA1Dy3k\n-----END PRIVATE KEY-----\n"
+      }
+    }
+  ]
+}
