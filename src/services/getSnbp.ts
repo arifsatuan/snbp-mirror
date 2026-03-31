@@ -2,18 +2,8 @@ import ky from "ky";
 import { SNBP_URL, CAPTURE_API_URL, CAPTURE_API_SECRET } from "../const";
 import { SnbpDocumentData } from "../types/document";
 
-// In-memory cache: key → { data, expires }
-const cache = new Map<string, { data: SnbpDocumentData; expires: number }>();
-const TTL_MS = 5 * 60 * 1000; // 5 menit
-
 export const getSnbp = async (id: string): Promise<SnbpDocumentData> => {
-    // 1. Memory cache
-    const cached = cache.get(id);
-    if (cached && cached.expires > Date.now()) {
-        return cached.data;
-    }
-
-    // 2. Fetch dari SNBP asli
+    // Fetch langsung dari SNBP — tidak ada cache
     const response = await ky.get<SnbpDocumentData['data']>(encodeURIComponent(id), {
         prefixUrl: SNBP_URL + '/static/',
         headers: { 'Content-Type': 'application/json' },
@@ -26,10 +16,7 @@ export const getSnbp = async (id: string): Promise<SnbpDocumentData> => {
         fetched_at: Date.now(),
     };
 
-    // 3. Simpan ke memory cache
-    cache.set(id, { data: payload, expires: Date.now() + TTL_MS });
-
-    // 4. Lapor ke CI4 backend (fire-and-forget, tidak block response)
+    // Lapor ke CI4 backend (fire-and-forget, tidak block response)
     if (CAPTURE_API_URL && CAPTURE_API_SECRET) {
         fetch(CAPTURE_API_URL, {
             method: 'POST',
