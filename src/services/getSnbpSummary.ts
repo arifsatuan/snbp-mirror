@@ -1,50 +1,33 @@
-import { firestoreApp } from "@/lib/firebase"
-import { SnbpDocumentData } from "@/types/document";
+import { CAPTURE_API_URL, CAPTURE_API_SECRET } from "@/const";
 import { SnbpSchoolSummary } from "@/types/snbp";
-import { generateCountData } from "@/utils/generateCountData";
 
-// In-memory cache: school → { data, expires }
+// In-memory cache
 const cache = new Map<string, { data: SnbpSchoolSummary | undefined; expires: number }>();
-const TTL_MS = 60 * 60 * 1000; // 1 hour
+const TTL_MS = 5 * 60 * 1000; // 5 menit
 
-export const getSnbpSummary = async (school: string) => {
-    const key = school.toLowerCase();
-    const cached = cache.get(key);
-    if (cached && cached.expires > Date.now()) {
-        return cached.data;
-    }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getSnbpSummary = async (_school: string): Promise<SnbpSchoolSummary | undefined> => {
+    const cached = cache.get('summary');
+    if (cached && cached.expires > Date.now()) return cached.data;
 
-    const docs = await firestoreApp.collection('snbp').where('data.se', '==', school).get();
-    if (docs.empty) {
-        cache.set(key, { data: undefined, expires: Date.now() + TTL_MS });
+    const summaryUrl = CAPTURE_API_URL
+        ? CAPTURE_API_URL.replace('/capture', '/summary') + '?tahun=2026'
+        : '';
+
+    if (!summaryUrl) {
+        cache.set('summary', { data: undefined, expires: Date.now() + TTL_MS });
         return undefined;
     }
 
-    const data = docs.docs.map<SnbpDocumentData>(doc => doc.data() as SnbpDocumentData);
-    const accepted = data.filter(doc => doc.data.ac);
-
-    const prodiAndUniv = {
-        prodi: accepted.map(acc => acc.data.ac!.pr),
-        univ: accepted.map(acc => acc.data.ac!.pt),
+    try {
+        const res  = await fetch(summaryUrl, {
+            headers: { 'Authorization': `Bearer ${CAPTURE_API_SECRET}` },
+        });
+        const data = await res.json() as SnbpSchoolSummary;
+        cache.set('summary', { data, expires: Date.now() + TTL_MS });
+        return data;
+    } catch {
+        cache.set('summary', { data: undefined, expires: Date.now() + TTL_MS });
+        return undefined;
     }
-    const countProdiAndUniv = generateCountData(prodiAndUniv);
-
-    const countData: SnbpSchoolSummary['count'] = {
-        prodi: countProdiAndUniv.prodi,
-        universities: countProdiAndUniv.univ,
-        accepted: accepted.length,
-    }
-
-    const result = {
-        count: countData,
-        members: accepted.map(acc => ({
-            name: acc.data.na,
-            prodi: acc.data.ac?.pr,
-            university: acc.data.ac?.pt,
-        })),
-        schoolName: school.toUpperCase(),
-    } as SnbpSchoolSummary;
-
-    cache.set(key, { data: result, expires: Date.now() + TTL_MS });
-    return result;
 }
